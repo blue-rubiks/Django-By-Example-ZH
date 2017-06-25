@@ -515,6 +515,17 @@ Django的*Object-relational mapping(ORM)*是基于查询集（QuerySet）。查�
     
     >>> Post.objects.all()
     
+    
+by twtrubiks
+
+使用 pycharm 的 Python Console 觀看 django orm 執行的真正 SQL
+```
+import logging
+l = logging.getLogger('django.db.backends')
+l.setLevel(logging.DEBUG)
+l.addHandler(logging.StreamHandler())
+```
+
 ##使用filter()方法
 为了过滤查询集（QuerySet），你可以在管理器（manager）上使用`filter()`方法。例如，我们可以返回所有在2015年发布的帖子，如下所示：
     
