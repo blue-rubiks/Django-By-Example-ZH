@@ -852,8 +852,13 @@ def post_list(request):
 
 ```html
 {% block content %}
-  ...
-  {% include "pagination.html" with page=posts %}
+  <h1>My Blog</h1>
+    {% for post in posts %}
+	  ...
+    {% endfor %}
+    
+    {% include "pagination.html" with page=posts %}
+    
 {% endblock %}
 ```
 
