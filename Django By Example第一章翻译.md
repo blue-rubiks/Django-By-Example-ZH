@@ -535,6 +535,11 @@ l.addHandler(logging.StreamHandler())
 
     Post.objects.filter(publish__year=2015, author__username='admin')
     
+其實
+> author__username='admin'
+
+使用的方法，就是 inner join (原因是設定了 ForeignKey)
+    
 上面的写法和下面的写法产生的结果是一致的：
 
     Post.objects.filter(publish__year=2015).filter(author__username='admin')
@@ -568,12 +573,12 @@ post.delete()
 
 ##查询集（QuerySet）什么时候会执行
 只要你喜欢，你可以连接许多的过滤给查询集（QuerySet）而且不会立马在数据库中执行直到这个查询集（QuerySet）被执行。查询集（QuerySet）只有在以下情况中才会执行：
-    * 在你第一次迭代它们的时候
-    * 当你对它们的实例进行切片：例如`Post.objects.all()[:3]`
-    * 当你对它们进行了打包或缓存
-    * 当你对它们调用了`repr()`或`len()`方法
-    * 当你明确的对它们调用了`list()`方法
-    * 当你在一个声明中测试它，例如*bool()*, or, and, or if
+* 在你第一次迭代它们的时候
+* 当你对它们的实例进行切片：例如`Post.objects.all()[:3]`
+* 当你对它们进行了打包或缓存
+* 当你对它们调用了`repr()`或`len()`方法
+* 当你明确的对它们调用了`list()`方法
+* 当你在一个声明中测试它，例如 **bool()** , or, and, or if
 
 ##创建model manager
 我们之前提到过, *objects*是每一个模型（models）的默认管理器（manager），它会返回数据库中所有的对象。但是我们也可以为我们的模型（models）定义一些定制的管理器（manager）。我们准备创建一个定制的管理器（manager）来返回所有状态为已发布的帖子。
