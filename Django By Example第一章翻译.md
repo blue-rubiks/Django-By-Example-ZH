@@ -889,9 +889,9 @@ class PostListView(ListView):
 * 使用一个特定的查询集（QuerySet）代替取回所有的对象。代替定义一个*queryset*属性，我们可以指定`model = Post`然后Django将会构建*Post.objects.all()* 查询集（QuerySet）给我们。
 * 使用环境变量*posts*给查询结果。如果我们不指定任意的*context_object_name*默认的变量将会是*object_list*。
 * 对结果进行分页处理每页只显示3个对象。
-* 使用定制的模板（template）来渲染页面。如果我们不设置默认的模板（template），*ListView*将会使用`blog/post_list.html`。
+* 使用定制的模板（template）来渲染页面。如果我们不设置默认的模板（template），*ListView*将会使用`blog/post/list.html`。
 
-现在，打开你的blog应用下的*urls.py*文件，注释到之前的*post_list*URL模式，在之后添加一个新的URL模式来使用*PostlistView*类，如下所示：
+现在，打开你的blog应用下的*urls.py*文件，注释到之前的*post_list* URL模式，在之后添加一个新的URL模式来使用*PostlistView*类，如下所示：
    
 ```python    
 urlpatterns = [
@@ -909,6 +909,10 @@ urlpatterns = [
     
     {% include "pagination.html" with page=page_obj %}
     
+include 說明    
+    
+(https://docs.djangoproject.com/en/1.11/ref/templates/builtins/#include)[https://docs.djangoproject.com/en/1.11/ref/templates/builtins/#include]
+
 在你的浏览器中打开 http://127.0.0.1:8000/blog/ 然后检查每一样功能是否都和之前的*post_list*视图（view）一样工作。这是一个简单的，通过使用Django提供的通用类的基于类视图（view）的例子。你将在*第十章，创建一个在线学习平台*以及相关的章节中学到更多的基于类的视图（views）。
 
 #总结
