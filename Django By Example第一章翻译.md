@@ -910,8 +910,9 @@ urlpatterns = [
     {% include "pagination.html" with page=page_obj %}
     
 include 說明    
-    
-(https://docs.djangoproject.com/en/1.11/ref/templates/builtins/#include)[https://docs.djangoproject.com/en/1.11/ref/templates/builtins/#include]
+
+[https://docs.djangoproject.com/en/1.11/ref/templates/builtins/#include]    
+(https://docs.djangoproject.com/en/1.11/ref/templates/builtins/#include)
 
 在你的浏览器中打开 http://127.0.0.1:8000/blog/ 然后检查每一样功能是否都和之前的*post_list*视图（view）一样工作。这是一个简单的，通过使用Django提供的通用类的基于类视图（view）的例子。你将在*第十章，创建一个在线学习平台*以及相关的章节中学到更多的基于类的视图（views）。
 
