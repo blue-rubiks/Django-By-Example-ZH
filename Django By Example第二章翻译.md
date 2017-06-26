@@ -49,8 +49,7 @@ class EmailPostForm(forms.Form):
     name = forms.CharField(max_length=25)
     email = forms.EmailField()
     to = forms.EmailField()
-    comments = forms.CharField(required=False,
-									     widget=forms.Textarea)
+    comments = forms.CharField(required=False,widget=forms.Textarea)
 ```
 
 这是你的第一个Django表单。看下代码：我们已经创建了一个继承了基础*Form*类的表单。我们使用不同的字段类型以使Django有依据的来验证字段。
