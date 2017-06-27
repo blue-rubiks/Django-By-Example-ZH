@@ -79,9 +79,8 @@ def post_share(request, post_id):
             cd = form.cleaned_data
             # ... send email
     else:
-        form = EmailPostform()
-    return render(request, 'blog/post/share.html', {'post': post,
-										                       'form: form})
+        form = EmailPostForm()
+    return render(request, 'blog/post/share.html', {'post': post,'form: form})
 ```
 
 该视图（view）完成了以下工作：
