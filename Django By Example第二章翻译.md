@@ -80,7 +80,7 @@ def post_share(request, post_id):
             # ... send email
     else:
         form = EmailPostForm()
-    return render(request, 'blog/post/share.html', {'post': post,'form: form})
+    return render(request, 'blog/post/share.html', {'post': post,'form': form})
 ```
 
 该视图（view）完成了以下工作：
