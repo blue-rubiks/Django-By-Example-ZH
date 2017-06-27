@@ -212,6 +212,8 @@ url(r'^(?P<post_id>\d+)/share/$', views.post_share,
 
 接下来我们要包含真实的表单实例。我们告诉Django用`as_p`方法利用HTML的`<p>`元素来渲染它的字段。我们也可以使用`as_ul`利用无序列表来渲染表单或者使用`as_table`利用HTML表格来渲染。如果我们想要逐一渲染每一个字段，我们可以迭代字段。例如下方的例子：
 
+`as_p` 可參考 https://docs.djangoproject.com/en/1.11/topics/forms/
+
 ```html
 {% for field in form %}
   <div>
