@@ -418,7 +418,7 @@ def post_detail(request, year, month, day, post):
 * 显示评论的列表
 * 显示一个表单给用户来添加新的评论
 
-首先，我们来添加评论的总数。打开*views_detail.html* **（译者注：根据官网最新更正修改，原文是blog_detail.html）**模板（template）在*content*区块中添加如下代码：
+首先，我们来添加评论的总数。打开*blog/post/detail.html* **（译者注：根据官网最新更正修改，原文是blog_detail.html）**模板（template）在*content*区块中添加如下代码：
 
 ```html
 {% with comments.count as total_comments %}
@@ -435,6 +435,11 @@ def post_detail(request, year, month, day, post):
 根据*total_comments*的值，我们使用*pluralize *模板（template）过滤器（filter）为单词*comment*显示复数后缀。模板（Template）过滤器（filters）获取到他们输入的变量值，返回计算后的值。我们将会在*第三章 扩展你的博客应用*中讨论更多的模板过滤器（tempalte filters）。
 
 *pluralize*模板（template）过滤器（filter）在值不为1时，会在值的末尾显示一个"s"。之前的文本将会被渲染成类似：*0 comments*, *1 comment* 或者 *N comments*。Django内置大量的模板（template）标签（tags）和过滤器（filters）来帮助你以你想要的方式来显示信息。
+
+pluralize 可參考
+
+https://docs.djangoproject.com/en/1.11/ref/templates/builtins/#pluralize
+
 
 现在，让我们加入评论列表。在模板（template）中之前的代码后面加入以下内容：
     
