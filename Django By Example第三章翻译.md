@@ -48,15 +48,19 @@ Django提供了以下帮助函数（functions）来允许你以一种简单的�
 
 我们将要开始创建一个简单标签（simple tag）来获取blog中所有已发布的帖子。编辑你刚才创建的*blog_tags.py*文件，加入以下代码：
     
-    from django import template
-	
-    register = template.Library()
-	
-    from ..models import Post
-	
-    @register.simple_tag
-    def total_posts():
-        return Post.published.count()
+```python
+from django import template
+
+from blog.models import Post
+
+register = template.Library()
+
+
+@register.simple_tag
+def total_posts():
+    return Post.published.count()
+
+```
 
 我们已经创建了一个简单的模板标签（template tag）用来取回目前为止所有已发布的帖子。每一个模板标签（template tags）都需要包含一个叫做*register*的变量来表明自己是一个有效的标签（tag）库。这个变量是*template.Library*的一个实例，它是用来注册你自己的模板标签（template tags）和过滤器（filter）的。我们用一个Python函数定义了一个名为*total_posts*的标签，并用`@register.simple-tag`装饰器定义此函数为一个简单标签（tag）并注册它。
 
