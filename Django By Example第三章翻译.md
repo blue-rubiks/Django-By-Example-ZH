@@ -34,7 +34,7 @@ Django提供了以下帮助函数（functions）来允许你以一种简单的�
 
 模板标签（template tags）必须存在Django的应用中。
 
-进入你的blog应用目录，创建一个新的目录命名为*templatetags*然后在该目录下创建一个空的*__init__.py*文件。接着在该目录下继续创建一个文件并命名为*blog_tags.py*。到此，我们的blog应用文件结构应该如下所示：
+进入你的blog应用目录，创建一个新的目录命名为*templatetags*然后在该目录下创建一个空的 ***__init__.py*** 文件。接着在该目录下继续创建一个文件并命名为 ***blog_tags.py***。到此，我们的blog应用文件结构应该如下所示：
 
     blog/
         __init__.py
