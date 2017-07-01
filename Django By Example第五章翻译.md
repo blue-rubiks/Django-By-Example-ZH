@@ -589,6 +589,8 @@ INSTALLED_APPS = [
 运行下面的命令来同步你的数据库：
 
 ```python
+python manage.py makemigrations thumbnail
+
 python manage.py migrate
 ```
 你看到的输出中应该包含下面这一行：
