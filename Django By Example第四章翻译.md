@@ -1126,20 +1126,17 @@ INSTALLED_APPS = (
 url('social-auth/', include('social_django.urls', namespace='social'))
 ```
 
-为了确保社交认证（authentication）可以工作，你还需要配置一个*hostname*，因为有些服务不允许重定向到*127.0.0.1*或*localhost*。为了解决这个问题，在*Linux*或者*Mac OSX*下，编辑你的*/etc/hosts*文件添加如下内容：
+直接將網址設定為 http://localhost:8000/  ， 並且將 fb 的應用程式網域設定為 localhost
 
-    127.0.0.1 mysite.com
-    
-这是用来告诉你的计算机指定*mysite.com* *hostname*指向你的本地机器。如果你使用*Windows*,你的hosts文件在 *C:\Winwows\ System32\Drivers\etc\hosts*。
+ https://developers.facebook.com/apps/?action=create
 
-为了验证你的*host*重定向是否可用，在浏览器中打开 http://mysite.com:8000/account/login/ 。如果你看到你的应用的登录页面，*host*重定向已经可用。
 
 ###使用Facebook认证（authentication）
 **（译者注：以下的几种社交认证操作步骤可能已经过时，请根据实际情况操作）**
 为了让你的用户能够使用他们的Facebook账号来登录你的网站，在项目*settings.py*文件中的*AUTHENTICATION_BACKENDS*设置中添加如下内容：
 
-    'social.backends.facebook.Facebook2OAuth2',
-    
+    'social.backends.facebook.Facebook2OAuth2', # 不再維護
+    
 ```python
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
@@ -1148,6 +1145,8 @@ AUTHENTICATION_BACKENDS = (
 +    'social_core.backends.facebook.FacebookOAuth2',
 )
 ```
+
+可參考 https://github.com/python-social-auth/social-examples/blob/master/example-django/example/settings.py
     
 为了添加Facebook的社交认证（authentication），你需要一个Facebook开发者账号，然后你必须创建一个新的Facebook应用。在浏览器中打开 https://developers.facebook.com/apps/?action=create 点击**Add new app**按钮。点击**Website**平台然后为你的应用取名为*Bookmarks*，输入 http://mysite.com:8000/ 作为你的网站URL。跟随快速开始步骤然后点击**Create App ID**。
 
@@ -1163,7 +1162,13 @@ AUTHENTICATION_BACKENDS = (
 此外，你还可以定义一个*SOCIAL_AUTH_FACEBOOK_SCOPE*设置如果你想要访问Facebook用户的额外权限，例如：
 
     SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
-    
+ 	 
+ 
+```python
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+```
+
 最后，打开*registration/login.html*模板（template）然后添加如下代码到*content* block中：
 
     <div class="social">
