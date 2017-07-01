@@ -189,7 +189,9 @@ from django.utils.text import slugify
         image_name = '{}.{}'.format(slugify(image.title),
                                     image_url.rsplit('.', 1)[1].lower())
         # 從給定的 URL 中下載圖片
-        response = request.urlopen(image_url)
+        # response = request.urlopen(image_url)
+	req = request.Request(image_url, headers={'User-Agent': 'Mozilla/5.0'})
+        response = request.urlopen(req)
         image.image.save(image_name,
                          ContentFile(response.read()),
                          save=False)
@@ -198,6 +200,9 @@ from django.utils.text import slugify
         return image
 
 ```
+
+上方註解掉可參考 https://stackoverflow.com/questions/28396036/python-3-4-urllib-request-error-http-403?answertab=votes#tab-top
+
 我们覆写的`save()`方法保持了`ModelForm`中需要的参数、
 这段代码：
  1. 我们通过调用`save()`方法从表单中新建了一个`image`对象，并且`commit=False`
@@ -986,6 +991,8 @@ url(r'^$', views.image_list, name='list'),
    - 响应含有数据：我们将数据添加到id为 `image-list`的 HTML 元素中，当用户滚动到底部时页面将直接扩展添加的结果。
 
 在浏览器中访问`http://127.0.0.1:8000/images/`,你会看到你之前添加的一组图片，看起来像这样：
+
+![Alt text](http://ohqrvqrlb.bkt.clouddn.com/django-5-9.png)
 
 
 滚动到底部将会加载下一页。确定你已经使用书签添加了多于 8 张图片，因为我们每一页展示的是 8 张图片。记得使用 Firebug 或者类似的工具来跟踪 AJAX 请求和调试你的 JavaScript 代码。
