@@ -358,7 +358,8 @@ http://127.0.0.1:8000/images/create/?title=%20Django%20and%20Duke&url=http://upl
 这个 danshboard 展示了用户所标记的图片总数。我们使用`{% with %}`模板标签来设置一个带有用户标记图片总数的参数。我们也引入了一个带有`href`属性的链接，这个链接含有我们的书签激活脚本。我们从`  bookmarklet_launcher.js`模板中引入 JavaScript 脚本。
 
 在你的浏览器中打开` http://127.0.0.1:8000/account/ `,你可以看到如下页面：
-![此处输入图片的描述][3]
+
+![Alt text](http://ohqrvqrlb.bkt.clouddn.com/django-5-3.png)
 
 
 拖拽`Bookmark it!`链接到你的浏览器的书签工具栏中。
