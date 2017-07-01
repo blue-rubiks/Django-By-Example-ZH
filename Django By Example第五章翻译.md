@@ -625,6 +625,9 @@ Creating table thumbnail_kvstore
 我们将在图片详情页添加一个供用户点击的链接，表示他们喜欢这张图片。我们将会用 AJAX 来避免重载整个页面。首先，在 `views.py` 中创建一个可供用户点击“喜欢”或“不喜欢”的视图。编辑 images 应用的`views.py`，将以下代码添加进去：
 
 ```python
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+
 @login_required
 @require_POST
 def image_like(request):
@@ -805,9 +808,13 @@ CSRF token将会在所有的不安全 HTTP 方法的 AJAX 请求中引入，比�
  9. 我们基于执行的动作来增加或者减少 likes 的总数
 
 在你的浏览器中打开一张你上传的图片的详情页，你可以看到初始的 like 统计和一个 `LIKE` 按钮：
-![Django-5-7][7]
+
+![Alt text](http://ohqrvqrlb.bkt.clouddn.com/django-5-7.png)
+
 点击**`LIKE`**按钮，你将会看见 likes 的总数上升了，按钮的文本也变成了**`UNLIKE`**：
-![Django-5-8][8]
+
+![Alt text](http://ohqrvqrlb.bkt.clouddn.com/django-5-8.png)
+
 当你点击**`UNLIKE`**按钮时动作被执行，按钮的文本也会变成**`LIKE`**，统计的总数也会据此下降。
 
 在编写 JavaScript 时，特别是在写 AJAX 请求时， 我们建议应该使用一个类似于 Firebug 的工具来调试你的 JavaScript 脚本以及监视 CSS 和 HTML 的变化，你可以下载 Firebug ： http://getfirebug.com/。一些浏览器比如*Chrome*或者*Safari*也包含一些调试 JavaScript 的开发者工具。在那些浏览器中，你可以在网页的任何地方右键然后点击**Inspect element**来使用网页开发者工具。
