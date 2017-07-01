@@ -573,7 +573,18 @@ class Image(models.Model):
 ```python
 pip install sorl-thumbnail==12.3
 ```
-编辑 bookmarklet 项目文件的`settings.py`,将`sorl-thumbnail`添加进`INSTALLED_APPS`.
+编辑 bookmarklet 项目文件的`settings.py`,将`sorl.thumbnail`添加进`INSTALLED_APPS`.
+
+```python
+
+INSTALLED_APPS = [
+     ......
+    'sorl.thumbnail',
+]
+
+```
+
+可參考 https://github.com/jazzband/sorl-thumbnail
 
 运行下面的命令来同步你的数据库：
 
