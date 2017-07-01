@@ -535,19 +535,39 @@ urlpatterns = [
 ###重置密码视图（views）
 在*account*应用*urls.py*文件中为密码重置添加如下URL模式：
 
-    # restore password urls
-     url(r'^password-reset/$',
-        'django.contrib.auth.views.password_reset',
+```python
+urlpatterns = [
+    # post views
+    # url(r'^login/$', views.user_login, name='login'),
+    url(r'^$', views.dashboard, name='dashboard'),
+
+    # login logout
+    url(r'^login/$', login, name='login'),
+    url(r'^logout/$', logout, name='logout'),
+    url(r'^logout-then-login/$', logout_then_login, name='logout_then_login'),
+
+    # change password
+    url(r'^password-change/$', password_change, name='password_change'),
+    url(r'^password-change/done/$', password_change_done, name='password_change_done'),
+
++    # reset password
++    # restore password urls
++    url(r'^password-reset/$',
+        password_reset,
         name='password_reset'),
-     url(r'^password-reset/done/$',
-         'django.contrib.auth.views.password_reset_done',
-         name='password_reset_done'),
-      url(r'^password-reset/confirm/(?P<uidb64>[-\w]+)/(?P<token>[-\w]+)/$',
-           'django.contrib.auth.views.password_reset_confirm',
-         name='password_reset_confirm'),
-     url(r'^password-reset/complete/$',
-         'django.contrib.auth.views.password_reset_complete',
-          name='password_reset_complete'),
++    url(r'^password-reset/done/$',
+        password_reset_done,
+        name='password_reset_done'),
++    url(r'^password-reset/confirm/(?P<uidb64>[-\w]+)/(?P<token>[-\w]+)/$',
+        password_reset_confirm,
+        name='password_reset_confirm'),
++    url(r'^password-reset/complete/$',
+        password_reset_complete,
+        name='password_reset_complete'),
+
+]
+
+```
 
 在你的*account*应用*templates/registration/*目录下添加一个新的文件命名为*password_reset_form.html*，为它添加如下代码：
 
@@ -571,7 +591,7 @@ urlpatterns = [
     
 这个模板（template）会被用来渲染发送给用户的重置密码邮件。
 
-在相同目录下添加另一个文件命名为*password_reset_done.html*，为它添加如下代码：
+在相同目录下添加另一个文件命名为 ***password_reset_done.html*** ，为它添加如下代码：
 
     {% extends "base.html" %}
     {% block title %}Reset your password{% endblock %}
@@ -581,7 +601,7 @@ urlpatterns = [
       <p>If you don't receive an email, please make sure you've entered the address you registered with.</p>
     {% endblock %}
     
-再创建另一个模板（template）命名为*passowrd_reset_confirm.html*，为它添加如下代码：
+再创建另一个模板（template）命名为*password_reset_confirm.html*，为它添加如下代码：
 
     {% extends "base.html" %}
     {% block title %}Reset your password{% endblock %}
