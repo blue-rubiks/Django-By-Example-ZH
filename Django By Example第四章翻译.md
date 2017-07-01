@@ -456,7 +456,19 @@ Django会在用户登出的时候展示这个模板（template）。
 
 在这个页面中，你能看到用户已经登出，然后，你无法看到当前网站的任何菜单。在右上角现在显示的是**Log-in**链接。
 
-如果在你的登出页面中看到了Django管理站点的登出页面，检查项目*settings.py*中的*INSTALLED_APPS*,确保*django.contrib.admin*在*account*应用的后面。每个模板（template）被定位在同样的相对路径时，Django模板（template）读取器将会使用它找到的第一个应用中的模板（templates）。
+如果在你的登出页面中看到了Django管理站点(後台的登出畫面)的登出页面，检查项目***settings.py***中的***INSTALLED_APPS***,确保***django.contrib.admin***在***account***应用的后面。每个模板（template）被定位在同样的相对路径时，Django模板（template）读取器将会使用它找到的第一个应用中的模板（templates）。
+
+```python
+INSTALLED_APPS = [
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
++    'account',
++    'django.contrib.admin', # 要在account後面，有順序性
+]
+```
 
 ###修改密码视图（views）
 我们还需要我们的用户在登录成功后可以进行修改密码。我们要集成Django认证（authentication）视图（views）来修改密码。打开*account*应用中的*urls.py*文件，添加如下URL模式：
