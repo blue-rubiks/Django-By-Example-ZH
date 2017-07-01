@@ -776,17 +776,20 @@ Django还提供一个*UserCreationForm*表单（form）给你使用，它位于*
 
 编辑*account*应用中的*model.py*文件，添加如下代码：
 
-    from django.db import models
-    from django.conf import settings
-	
-	
-    class Profile(models.Model):
-        user = models.OneToOneField(settings.AUTH_USER_MODEL)
-        date_of_birth = models.DateField(blank=True, null=True)
-        photo = models.ImageField(upload_to='users/%Y/%m/%d', blank=True)
-    	
-		def __str__(self):
-        	return 'Profile for user {}'.format(self.user.username)
+```python
+from django.conf import settings
+from django.db import models
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL)
+    date_of_birth = models.DateField(blank=True, null=True)
+    photo = models.ImageField(upload_to='users/%Y/%m/%d', blank=True)
+
+    def __str__(self):
+
+        return 'Profile for user {}'.format(self.user.username)
+```
 
 > 为了保持你的代码通用化，当需要定义模型（model）和用户模型的关系时，使用`get_user_model()`方法来取回用户模型（model）并使用*AUTH_USER_MODEL*设置来引用这个用户模型，替代直接引用auth的*User*模型（model)。
 
