@@ -366,12 +366,12 @@ http://127.0.0.1:8000/images/create/?title=%20Django%20and%20Duke&url=http://upl
 
 现在创建下面几个路径和文件在 images 应用路径中：
 
- - static/
- - js/
- - bookmarklet.js
+images/static/css/bookmarklet.css
+ 
+images/static/js/bookmarklet.js
 
 你会在本章示例代码文件夹中的images 应用路径下找到 `static/css/` 路径。复制 `css/` 路径到你的代码文件夹下的`static/`中。` css/bookmarklet.css`文件为我们的 JavaScript 书签提供了样式。
-编辑`  bookmarklet.js`静态文件，然后添加以下 JavaScript 代码：
+编辑`  images/static/js/bookmarklet.js`静态文件，然后添加以下 JavaScript 代码：
 
 ```JavaScript
 (function () {
