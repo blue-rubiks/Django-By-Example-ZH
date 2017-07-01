@@ -1029,25 +1029,31 @@ Django提供了一个简单的方法来定义你自己的认证（authentication
 
 在你的*account*应用中创建一个新的文件命名为*authentication.py*，为它添加如下代码：
 
-    from django.contrib.auth.models import User
-	
-    class EmailAuthBackend(object):
-        """
-        Authenticate using e-mail account.
-        """
-        def authenticate(self, username=None, password=None):
-            try:
-                user = User.objects.get(email=username)
-                if user.check_password(password):
-                    return user
-                return None
-            except User.DoesNotExist:
-                return None
-        def get_user(self, user_id):
-            try:
-                return User.objects.get(pk=user_id)
-            except User.DoesNotExist:
-    return None
+```python
+from django.contrib.auth.models import User
+
+
+class EmailAuthBackend(object):
+    """
+    Authenticate using e-mail account.
+    """
+
+    def authenticate(self, username=None, password=None):
+        try:
+            user = User.objects.get(email=username)
+            if user.check_password(password):
+                return user
+            return None
+        except User.DoesNotExist:
+            return None
+
+    def get_user(self, user_id):
+        try:
+            return User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            return None
+
+```
 
 这是一个简单的认证（authentication）后台。`authenticate()`方法接收了*username*和*password*两个可选参数。我们可以使用不同的参数，但是我们需要使用*username*和*password*来确保我们的后台可以立马在认证（authentication）框架视图（views）中工作。以上代码完成了以下工作内容：
 
@@ -1068,18 +1074,33 @@ Django提供了一个简单的方法来定义你自己的认证（authentication
 ##为你的站点添加社交认证（authentication）
 你可以希望给你的站点添加一些社交认证（authentication）服务，例如 *Facebook*，*Twitter*或者*Google*(国内就算了- -|||)。*Python-social-auth*是一个Python模块提供了简化的处理为你的网站添加社交认证（authentication）。通过使用这个模块，你可以让你的用户使用他们的其他服务的账号来登录你的网站。你可以访问 https://github.com/omab/python-social-auth 得到这个模块的代码。
 
+python-social-auth 已經停止開發，請參考  https://github.com/omab/python-social-auth#deprecation-notice---2016-12-03
+
+請改安裝  https://python-social-auth-docs.readthedocs.io/en/latest/configuration/django.html
+
+
 这个模块自带很多认证（authentication）后台给不同的Python框架，其中就包含Django。
 
 使用pip来安装这个包，打开终端运行如下命令：
 
-    pip install python-social-auth==0.2.12
+> pip install python-social-auth==0.2.12  (已經不維護了)
+    
+> pip install social-auth-app-django    
     
 安装成功后，我们需要在项目*settings.py*文件中的*INSTALLED_APPS*设置中添加*social.apps.django_app.default*：
 
     INSTALLED_APPS = (
-        #...
-        'social.apps.django_app.default',
+        #... 已經不維護
+        'social.apps.django_app.default',
     )
+
+```python
+INSTALLED_APPS = (
+    ...
+    'social_django',
+    ...
+)
+```
 
 这个*default*应用会在Django项目中添加*python-social-auth*。现在，运行以下命令来同步*python-social-auth*模型（model）到你的数据库中：
 
@@ -1093,12 +1114,17 @@ Django提供了一个简单的方法来定义你自己的认证（authentication
 
 *python-social-auth*包含了很多服务的后台。你可以访问 https://python-social-auth.readthedocs.org/en/latest/backends/index.html#supported-backends 看到所有的后台支持。
 
+
 我们要包含的认证（authentication）后台包括*Facebook*，*Twitter*，*Google*。
 
 你需要在你的项目中添加社交登录URL模型。打开*bookmarks*项目中的主*urls.py*文件，添加如下URL模型：
 
-    url('social-auth/',
-        include('social.apps.django_app.urls', namespace='social')),
+    url('social-auth/',include('social.apps.django_app.urls', namespace='social')),  # 已經不維護
+
+
+```python
+url('social-auth/', include('social_django.urls', namespace='social'))
+```
 
 为了确保社交认证（authentication）可以工作，你还需要配置一个*hostname*，因为有些服务不允许重定向到*127.0.0.1*或*localhost*。为了解决这个问题，在*Linux*或者*Mac OSX*下，编辑你的*/etc/hosts*文件添加如下内容：
 
@@ -1113,6 +1139,15 @@ Django提供了一个简单的方法来定义你自己的认证（authentication
 为了让你的用户能够使用他们的Facebook账号来登录你的网站，在项目*settings.py*文件中的*AUTHENTICATION_BACKENDS*设置中添加如下内容：
 
     'social.backends.facebook.Facebook2OAuth2',
+    
+```python
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'account.authentication.EmailAuthBackend',
++    'social_core.backends.facebook.FacebookAppOAuth2',
++    'social_core.backends.facebook.FacebookOAuth2',
+)
+```
     
 为了添加Facebook的社交认证（authentication），你需要一个Facebook开发者账号，然后你必须创建一个新的Facebook应用。在浏览器中打开 https://developers.facebook.com/apps/?action=create 点击**Add new app**按钮。点击**Website**平台然后为你的应用取名为*Bookmarks*，输入 http://mysite.com:8000/ 作为你的网站URL。跟随快速开始步骤然后点击**Create App ID**。
 
