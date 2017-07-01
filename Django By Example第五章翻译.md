@@ -374,46 +374,48 @@ http://127.0.0.1:8000/images/create/?title=%20Django%20and%20Duke&url=http://upl
 编辑`  bookmarklet.js`静态文件，然后添加以下 JavaScript 代码：
 
 ```JavaScript
-(function(){
-  var jquery_version = '2.1.4';
-  var site_url = 'http://127.0.0.1:8000/';
-  var static_url = site_url + 'static/';
-  var min_width = 100;
-  var min_height = 100;
+(function () {
+    var jquery_version = '2.1.4';
+    var site_url = 'http://127.0.0.1:8000/';
+    var static_url = site_url + 'static/';
+    var min_width = 100;
+    var min_height = 100;
 
-  function bookmarklet(msg) {
-      // Here goes our bookmarklet code
-);
- // Check if jQuery is loaded
-  if(typeof window.jQuery != 'undefined') {
-    bookmarklet();
-  } else {
-    // Check for conflicts
-    var conflict = typeof window.$ != 'undefined';
-    // Create the script and point to Google API
-    var script = document.createElement('script');
-    script.setAttribute('src','http://ajax.googleapis.com/ajax/libs/jquery/' + jquery_version + '/jquery.min.js');
-    // Add the script to the 'head' for processing
-    document.getElementsByTagName('head')[0].appendChild(script);
-    // Create a way to wait until script loading
-    var attempts = 15;
-    (function(){
-      // Check again if jQuery is undefined
-      if(typeof window.jQuery == 'undefined') {
-        if(--attempts > 0) {
-          // Calls himself in a few milliseconds
-          window.setTimeout(arguments.callee, 250)
-        } else {
-          // Too much attempts to load, send error
-          alert('An error ocurred while loading jQuery')
-        }
-      } else {
-          bookmarklet();
-      }
-    })();
-  }
+    function bookmarklet(msg) {
+        // Here goes our bookmarklet code
 
-})()
+    }
+
+    // Check if jQuery is loaded
+    if (typeof window.jQuery != 'undefined') {
+        bookmarklet();
+    } else {
+        // Check for conflicts
+        var conflict = typeof window.$ != 'undefined';
+        // Create the script and point to Google API
+        var script = document.createElement('script');
+        script.setAttribute('src', 'http://ajax.googleapis.com/ajax/libs/jquery/' + jquery_version + '/jquery.min.js');
+        // Add the script to the 'head' for processing
+        document.getElementsByTagName('head')[0].appendChild(script);
+        // Create a way to wait until script loading
+        var attempts = 15;
+        (function () {
+            // Check again if jQuery is undefined
+            if (typeof window.jQuery == 'undefined') {
+                if (--attempts > 0) {
+                    // Calls himself in a few milliseconds
+                    window.setTimeout(arguments.callee, 250)
+                } else {
+                    // Too much attempts to load, send error
+                    alert('An error ocurred while loading jQuery')
+                }
+            } else {
+                bookmarklet();
+            }
+        })();
+    }
+
+})();
 ```
 这是主要的 jQuery 加载脚本，当脚本已经加载到当前网站中时，它负责调用 JQuery 或者是从 Google 的 CDN 中加载 jQuery。当 jQuery 被加载，它会执行` bookmarklet()`函数，该函数包含我们的bookmarklet代码。我们还在这个文件顶部设置几个变量：
 
@@ -485,12 +487,15 @@ http://127.0.0.1:8000/images/create/?title=%20Django%20and%20Duke&url=http://upl
  3. 我们隐藏了书签然后在浏览器中打开一个新的窗口，这个窗口访问了我们的网站中为一个新的图片打标签的 URL 。我们传递了网站的`title`元素和被选中图片的 URL 作为 GET 参数。
 
 在你的浏览器中随便选择一个网址打开，然后点击你的书签。你将会看到一个白色的新窗口出现在当前网页上，它展示了所有尺寸大于 100*100px 的 JPG 图片，它看起来就像下面的例子一样：
-![django-5-4][4]
+
+![Alt text](http://ohqrvqrlb.bkt.clouddn.com/django-5-4.png)
+
 因为我们已经开启了 Django 的开发服务器，使用 HTTP 来提供页面， 由于安全限制，书签将不能在 HTTPS 上工作。
 
 如果你点击一幅图片，你将会被重定向到创建图片的页面，请求地址传递了网站的标题和被选中图片的 URL 作为 GET 参数。
 
-![Django-5-5][5]
+![Alt text](http://ohqrvqrlb.bkt.clouddn.com/django-5-5.png)
+
 恭喜！这是你的第一个 JavaScript 书签！现在它已经和你的 Django 项目成为一体！
 
 ##**为你的图片创建一个详情视图**
