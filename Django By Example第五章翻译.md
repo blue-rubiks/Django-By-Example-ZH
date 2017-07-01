@@ -206,7 +206,7 @@ from django.utils.text import slugify
  4. 我们使用 Python 的 `urllib` 模块来下载图片，然后我们调用`save()`方法把图片传递给一个`ContentFiel`对象，这个对象被下载的文件所实例化。这样，我们就可以将我们的文件保存到项目中的 media 路径下。我们传递了参数`comiit=False`来避免对象被保存到数据库中。
  5. 为了保持和我们覆写的`save()`方法一样的行为，我们将在`commit`参数为`Ture`时保存表单到数据库中。
 
-现在我们需要一个新的视图来控制我们的表单。编辑 iamges 应用的`views.py`文件，然后将以下代码添加进去:
+现在我们需要一个新的视图来控制我们的表单。编辑 images 应用的`views.py`文件，然后将以下代码添加进去:
 
 ```python
 from django.shortcuts import render, redirect
@@ -297,10 +297,17 @@ templates/
 ```
 http://127.0.0.1:8000/images/create/?title=%20Django%20and%20Duke&url=http://upload.wikimedia.org/wikipedia/commons/8/85/Django_Reinhardt_and_Duke_Ellington_%28Gottlieb%29.jpg
 ```
+
 你可以看到一个带有图片预览的表单，就像下面这样：
-![Django-5-2][2]
-添加描述然后点击 **Bookmark it！**按钮。一个新的 `Image`对象将会被保存在你的数据库中。你将会得到一个错误，这个错误指示说`Image`模型没有`get_absolute_url()`方法。现在先不要担心这个，我们待会儿将添加这个方法、在你的浏览器中打开`http://127.0.0.1:8000/admin/images/image/`，确定新的图像对象已经被保存了。
-##**用 jQuery 创建一个书签**
+
+![Alt text](http://ohqrvqrlb.bkt.clouddn.com/django-5-2.png)
+
+添加描述然后点击 ***Bookmark it！*** 按钮。一个新的 `Image`对象将会被保存在你的数据库中。你将会得到一个错误，这个错误指示说`Image`模型没有`get_absolute_url()`方法。现在先不要担心这个，我们待会儿将添加这个方法、在你的浏览器中打开`http://127.0.0.1:8000/admin/images/image/`，确定新的图像对象已经被保存了。
+
+
+## 用 jQuery 创建一个书签
+
+
 书签是一个保存在浏览器中包含 JavaScript 代码的标签，用来拓展浏览器功能。当你点击书签的时候， JavaScript 代码会在浏览器显示的网站中被执行。这是一个在和其它网站交互时非常有用的工具。
 
 一些在线服务，比如 Pinterest 实现了他们自己的书签来让用户可以在他们的平台中分享来自其他网站的内容，我们将以同样的方式创建一个书签，让用户可以在我们的网站中分享来自其他网站的图片。
