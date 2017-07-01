@@ -543,16 +543,17 @@ class Image(models.Model):
                     </span>
                  </div>
                  {{ image.description|linebreaks }}
-        <div class="image-likes">
-            {% for user in image.users_like.all %}
-                <div>
-                    <img src="{{ user.profile.photo.url }}">
-                    <p>{{ user.first_name }}</p>
-                </div>
-            {% empty %}
-                Nobody likes this image yet.
-            {% endfor %}
-        </div>
+		<div class="image-likes">
+		    {% for user in image.users_like.all %}
+			<div>
+			    <img src="{{ user.profile.photo.url }}">
+			    <p>{{ user.first_name }}</p>
+			</div>
+		    {% empty %}
+			Nobody likes this image yet.
+		    {% endfor %}
+		</div>
+	</div>
     {% endwith %}
 {% endblock %}
 ```
@@ -616,7 +617,9 @@ Creating table thumbnail_kvstore
 这里，我们定义了一个固定宽度为 300px 的缩略图。当用户第一次加载这页面时，缩略图将会被创建。生成的缩略图将会在接下来的请求中被使用。运行`python manage.py runserver`开启开发服务器，连接到一张已有图片的详情页。缩略图将会生成并展示在网站中。
 
 `sorl-thumbnail`应用提供了几个选择来定制你的缩略图，包括裁减算法和能被应用的不同效果。如果你有任何生成缩略图的疑难点，你可以在你的设置中添加`THUMBNAIL_DEBUG = TRUE`来获得 debug 信息。你可以阅读`sorl-thumbnail`的完整文档：http://sorl-thumbnail.readthedocs.org/
-##**用 jQuery 添加 AJAX 动作**
+
+
+## 用 jQuery 添加 AJAX 动作
 现在我们将在你的应用中添加 AJAX 动作。AJAX 源于 Asynchronous JavaScript and XML（异步 JavaScript 和 XML）。这个术语包含一组可以制造异步 HTTP 请求的技术，它包含从服务器异步发送和接收数据，不需要重载整个页面，虽然它的名字里有 XML， 但是 XML 不是必需的。你可以以其他的格式发送或者接收数据，如 JSON， HTML，或者是纯文本。
 
 我们将在图片详情页添加一个供用户点击的链接，表示他们喜欢这张图片。我们将会用 AJAX 来避免重载整个页面。首先，在 `views.py` 中创建一个可供用户点击“喜欢”或“不喜欢”的视图。编辑 images 应用的`views.py`，将以下代码添加进去：
