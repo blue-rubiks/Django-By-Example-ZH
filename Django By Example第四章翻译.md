@@ -491,9 +491,9 @@ urlpatterns = [
 
 ```
 
-password_change 默認模版路徑為 registration/password_change_form.html
+***password_change*** 默認模版路徑為 ***registration/password_change_form.html***
 
-password_change_done 默認模版路徑為 registration/password_change_done.html
+***password_change_done*** 默認模版路徑為 ***registration/password_change_done.html***
 
 *password_change* 视图（view）将会操作表单（form）进行修改密码，当用户成功的修改他的密码后 *password_change_done* 将会显示一条成功信息。让我们为每个视图（view）创建一个模板（template）。
 
@@ -511,7 +511,7 @@ password_change_done 默認模版路徑為 registration/password_change_done.htm
       </form>
     {% endblock %}
 
-这个模板（template）包含了修改密码的表单（form）。现在，在相同的目录下创建另一个文件，命名为*password_change_done.html*，为它添加如下代码：
+这个模板（template）包含了修改密码的表单（form）。现在，在相同的目录下创建另一个文件，命名为 ***password_change_done.html*** ，为它添加如下代码：
 
     {% extends "base.html" %}
     {% block title %}Password changed{% endblock %}
