@@ -943,16 +943,15 @@ url(r'^$', views.image_list, name='list'),
    - 响应含有数据：我们将数据添加到id为 `image-list`的 HTML 元素中，当用户滚动到底部时页面将直接扩展添加的结果。
 
 在浏览器中访问`http://127.0.0.1:8000/images/`,你会看到你之前添加的一组图片，看起来像这样：
-![Django-5-9][9]
-  [1]: http://ohqrvqrlb.bkt.clouddn.com/django-5-1.png
-  [2]: http://ohqrvqrlb.bkt.clouddn.com/django-5-2.png
-  [3]: http://ohqrvqrlb.bkt.clouddn.com/django-5-3.png
-  [4]: http://ohqrvqrlb.bkt.clouddn.com/django-5-4.png
-  [5]: http://ohqrvqrlb.bkt.clouddn.com/django-5-5.png
-  [6]: http://ohqrvqrlb.bkt.clouddn.com/django-5-6.png
-  [7]: http://ohqrvqrlb.bkt.clouddn.com/django-5-7.png
-  [8]: http://ohqrvqrlb.bkt.clouddn.com/django-5-8.png
-  [9]: http://ohqrvqrlb.bkt.clouddn.com/django-5-9.png
+![Alt text](http://ohqrvqrlb.bkt.clouddn.com/django-5-1.png)
+![Alt text](http://ohqrvqrlb.bkt.clouddn.com/django-5-2.png)
+![Alt text](http://ohqrvqrlb.bkt.clouddn.com/django-5-3.png)
+![Alt text](http://ohqrvqrlb.bkt.clouddn.com/django-5-4.png)
+![Alt text](http://ohqrvqrlb.bkt.clouddn.com/django-5-5.png)
+![Alt text](http://ohqrvqrlb.bkt.clouddn.com/django-5-6.png)
+![Alt text](http://ohqrvqrlb.bkt.clouddn.com/django-5-7.png)
+![Alt text](http://ohqrvqrlb.bkt.clouddn.com/django-5-8.png)
+![Alt text](http://ohqrvqrlb.bkt.clouddn.com/django-5-9.png)
 
 滚动到底部将会加载下一页。确定你已经使用书签添加了多于 8 张图片，因为我们每一页展示的是 8 张图片。记得使用 Firebug 或者类似的工具来跟踪 AJAX 请求和调试你的 JavaScript 代码。
 
