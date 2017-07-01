@@ -506,9 +506,9 @@ from django.shortcuts import get_object_or_404
 from .models import Image
 def image_detail(request, id, slug):
     image = get_object_or_404(Image, id=id, slug=slug)
-    return render(request, 'images/image/detail.html', {'section':                                                                 'images','image': image})
+    return render(request, 'images/image/detail.html', {'section': 'images', 'image': image})
 ```
-这是一个用于展示图片的简单视图。编辑 iamges 应用的 `urls.py`，添加以下 URL 模式：
+这是一个用于展示图片的简单视图。编辑 images 应用的 `urls.py`，添加以下 URL 模式：
 
 ```python
 url(r'^detail/(?P<id>\d+)/(?P<slug>[-\w]+)/$',
@@ -561,8 +561,11 @@ class Image(models.Model):
 >使用`{% with %}`模版标签来防止 Django 做多次查询是很有用的
 
 现在使用书签来为一张图片打上标签。在你提交图片之后你将会被重定向图片详情页面。这张图片将会包含一条提交成功的消息，效果如下：
-![Django-5-6][6]
-##**使用 sorl-thumbnail 创建缩略图**
+
+![Alt text](http://ohqrvqrlb.bkt.clouddn.com/django-5-6.png)
+
+
+## 使用 sorl-thumbnail 创建缩略图
 我们在详情页展示原图片，但是不同的图片的尺寸是不同的。一些图片源文件或许会非常大，加载他们会耗费很长时间。展示规范图片的最好方法是生成缩略图。我们将使用一个 Django 应用，叫做`sorl-thumbnail`。
 
 打开终端，用下面的命令来安装`sorl-thumbnail`：
