@@ -456,7 +456,7 @@ Django会在用户登出的时候展示这个模板（template）。
 
 在这个页面中，你能看到用户已经登出，然后，你无法看到当前网站的任何菜单。在右上角现在显示的是**Log-in**链接。
 
-如果在你的登出页面中看到了Django管理站点(後台的登出畫面)的登出页面，检查项目***settings.py***中的***INSTALLED_APPS***,确保***django.contrib.admin***在***account***应用的后面。每个模板（template）被定位在同样的相对路径时，Django模板（template）读取器将会使用它找到的第一个应用中的模板（templates）。
+如果在你的登出页面中看到了Django管理站点(後台的登出畫面)的登出页面，检查项目 ***settings.py*** 中的 ***INSTALLED_APPS*** ,确保***django.contrib.admin*** 在 ***account*** 应用的后面。每个模板（template）被定位在同样的相对路径时，Django模板（template）读取器将会使用它找到的第一个应用中的模板（templates）。
 
 ```python
 INSTALLED_APPS = [
@@ -473,13 +473,27 @@ INSTALLED_APPS = [
 ###修改密码视图（views）
 我们还需要我们的用户在登录成功后可以进行修改密码。我们要集成Django认证（authentication）视图（views）来修改密码。打开*account*应用中的*urls.py*文件，添加如下URL模式：
 
-    # change password urls
-    url(r'^password-change/$',
-       'django.contrib.auth.views.password_change',
-       name='password_change'),
-    url(r'^password-change/done/$',
-       'django.contrib.auth.views.password_change_done',
-       name='password_change_done'),
+```python
+
+urlpatterns = [
+    # post views
+    # url(r'^login/$', views.user_login, name='login'),
+    url(r'^$', views.dashboard, name='dashboard'),
+    # login logout
+    url(r'^login/$', login, name='login'),
+    url(r'^logout/$', logout, name='logout'),
+    url(r'^logout-then-login/$', logout_then_login, name='logout_then_login'),
++  # change password
++    url(r'^password-change/$', password_change, name='password_change'),
++    url(r'^password-change/done/$', password_change_done, name='password_change_done'),
+
+]
+
+```
+
+password_change 默認模版路徑為 registration/password_change_form.html
+
+password_change_done 默認模版路徑為 registration/password_change_done.html
 
 *password_change* 视图（view）将会操作表单（form）进行修改密码，当用户成功的修改他的密码后 *password_change_done* 将会显示一条成功信息。让我们为每个视图（view）创建一个模板（template）。
 
