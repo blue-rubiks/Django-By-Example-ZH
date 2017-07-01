@@ -129,7 +129,9 @@ admin.site.register(Image, ImageAdmin)
 ```
 使用命令`python manage.py runserver`打开开发服务器，在浏览器中打开`http://127.0.0.1:8000/admin/`,可以看到`Image`模型已经注册到了管理站点中：
 
-![Django-5-1][1]
+![Alt text](http://ohqrvqrlb.bkt.clouddn.com/django-5-1.png)
+
+
 ##**从其他网站上传内容**
 我们将使用户可以给从他们在其他网站发现的图片打上标签。用户将要提供图片的 URL ，标题，和一个可选的描述。我们的应用将要下载这幅图片，并且在数据库中创建一个新的 `Image` 对象。
 我们从新建一个用于提交图片的表单开始。在images应用的路径下创建一个 `forms.py` 文件，在这个文件中添加如下代码：
@@ -168,7 +170,7 @@ def clean_url(self):
 
 ##**覆写模型表单中的save()方法**
 如你所知，`ModelForm`提供了一个`save()`方法来保存目前的模型实例到数据库中，并且返回一个对象。这个方法接受一个布尔参数`commit`，这个参数允许你指定这个对象是否要被储存到数据库中。如果`commit`是`False`，`save()`方法将会返回一个模型实例但是并不会把这个对象保存到数据库中。我们将覆写表单中的`save()`方法，来下载图片然后保存它。
-将以下的包在`foroms.py`中的顶部导入：
+将以下的包在`forms.py`中的顶部导入：
 
 ```python
 from urllib import request
@@ -178,21 +180,23 @@ from django.utils.text import slugify
 把`save()`方法加入`ImageCreateForm`中：
 
 ```python
-def save(self, force_insert=False,
-         force_update=False,
-         commit=True):
-    image = super(ImageCreateForm, self).save(commit=False)
-    image_url = self.cleaned_data['url']
-    image_name = '{}.{}'.format(slugify(image.title),
-    image_url.rsplit('.', 1)[1].lower())
-# 从给定的 URL 中下载图片
-    response = request.urlopen(image_url)
-    image.image.save(image_name,
-                    ContentFile(response.read()),
-                    save=False)
-    if commit:
-        image.save()
-    return image
+    def save(self, force_insert=False,
+             force_update=False,
+             commit=True):
+
+        image = super(ImageCreateForm, self).save(commit=False)
+        image_url = self.cleaned_data['url']
+        image_name = '{}.{}'.format(slugify(image.title),
+                                    image_url.rsplit('.', 1)[1].lower())
+        # 從給定的 URL 中下載圖片
+        response = request.urlopen(image_url)
+        image.image.save(image_name,
+                         ContentFile(response.read()),
+                         save=False)
+        if commit:
+            image.save()
+        return image
+
 ```
 我们覆写的`save()`方法保持了`ModelForm`中需要的参数、
 这段代码：
@@ -943,15 +947,7 @@ url(r'^$', views.image_list, name='list'),
    - 响应含有数据：我们将数据添加到id为 `image-list`的 HTML 元素中，当用户滚动到底部时页面将直接扩展添加的结果。
 
 在浏览器中访问`http://127.0.0.1:8000/images/`,你会看到你之前添加的一组图片，看起来像这样：
-![Alt text](http://ohqrvqrlb.bkt.clouddn.com/django-5-1.png)
-![Alt text](http://ohqrvqrlb.bkt.clouddn.com/django-5-2.png)
-![Alt text](http://ohqrvqrlb.bkt.clouddn.com/django-5-3.png)
-![Alt text](http://ohqrvqrlb.bkt.clouddn.com/django-5-4.png)
-![Alt text](http://ohqrvqrlb.bkt.clouddn.com/django-5-5.png)
-![Alt text](http://ohqrvqrlb.bkt.clouddn.com/django-5-6.png)
-![Alt text](http://ohqrvqrlb.bkt.clouddn.com/django-5-7.png)
-![Alt text](http://ohqrvqrlb.bkt.clouddn.com/django-5-8.png)
-![Alt text](http://ohqrvqrlb.bkt.clouddn.com/django-5-9.png)
+
 
 滚动到底部将会加载下一页。确定你已经使用书签添加了多于 8 张图片，因为我们每一页展示的是 8 张图片。记得使用 Firebug 或者类似的工具来跟踪 AJAX 请求和调试你的 JavaScript 代码。
 
