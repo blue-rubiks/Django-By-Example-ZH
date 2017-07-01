@@ -669,18 +669,17 @@ url(r'^like/$', views.image_like, name='like'),
 我们需要在我们的图片详情页中添加 AJAX 功能。我们首先将在 `base.html`模版中引入 AJAX。编辑 account 应用的 `base.html`模版，然后将以下代码在`</body>`标签前添加以下代码：
 
 ```html
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/
-jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script>
-  $(document).ready(function(){
-    {% block domready %}
-    {% endblock %}
+    $(document).ready(function () {
+        {% block domready %}
+        {% endblock %}
     });
 </script>
 ```
 我们从 Google 加载 jQuery 框架，Google提供了一个在高速内容分发网络中的流行 JavaScript 框架。你也可以自己下载 jQuery, 地址：http://jquery.com/ 。然后将下载的文件添加进应用的`static`路径下。
 
-我们添加`<script>`标签来引入 JavaScript 代码。`$(dovument).ready()`是一个 jQuery 函数，这个函数会在 DOM 层加载完毕后执行。 DON 源于 Document Object Model。当一个页面被载入时，DOM 会由浏览器创建， DOM 被创建为一个树对象。通过在这个函数中包含我们的代码来确保我们可以与DOM中加载的所有HTML元素都能进行交互操作。我们的代码仅仅会在 DOM 对象被加载完毕之后执行。
+我们添加`<script>`标签来引入 JavaScript 代码。`$(document).ready()`是一个 jQuery 函数，这个函数会在 DOM 层加载完毕后执行。 DOM 源于 Document Object Model。当一个页面被载入时，DOM 会由浏览器创建， DOM 被创建为一个树对象。通过在这个函数中包含我们的代码来确保我们可以与DOM中加载的所有HTML元素都能进行交互操作。我们的代码仅仅会在 DOM 对象被加载完毕之后执行。
 
 在文档预处理函数中，我们会在模板中引入一个 Django 模板块叫做 **domready**, 在扩展了基础模版之后将会引入特定的 JavaScript 。
 
