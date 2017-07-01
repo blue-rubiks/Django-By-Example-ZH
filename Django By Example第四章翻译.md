@@ -1162,7 +1162,9 @@ AUTHENTICATION_BACKENDS = (
 此外，你还可以定义一个*SOCIAL_AUTH_FACEBOOK_SCOPE*设置如果你想要访问Facebook用户的额外权限，例如：
 
     SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
- 	 
+
+可參考 http://python-social-auth.readthedocs.io/en/latest/backends/facebook.html
+	 
  
 ```python
 
