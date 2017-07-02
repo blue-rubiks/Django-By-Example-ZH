@@ -734,7 +734,7 @@ CSRF token将会在所有的不安全 HTTP 方法的 AJAX 请求中引入，比�
 编辑 images 应用中的 `images/image/detailmhtml`模板，删除这一行：
 
 ```
-{% with total_likes=image.user_like.count %}
+{% with total_likes=image.users_like.count %}
 ```
 替换为：
 
