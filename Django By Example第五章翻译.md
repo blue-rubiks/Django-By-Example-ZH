@@ -540,7 +540,7 @@ class Image(models.Model):
 {% block content %}
     <h1>{{ image.title }}</h1>
     <img src="{{ image.image.url }}" class="image-detail">
-    {% with total_likes=image.users_like.count %}
+    {% with total_likes=image.user_like.count %}
         <div class="image-info">
                 <div>
                     <span class="count">
@@ -642,9 +642,9 @@ def image_like(request):
         try:
             image = Image.objects.get(id=image_id)
             if action == 'like':
-                image.users_like.add(request.user)
+                image.user_like.add(request.user)
             else:
-                image.users_like.remove(request.user)
+                image.user_like.remove(request.user)
             return JsonResponse({'status':'ok'})
         except:
             pass
@@ -734,12 +734,12 @@ CSRF token将会在所有的不安全 HTTP 方法的 AJAX 请求中引入，比�
 编辑 images 应用中的 `images/image/detailmhtml`模板，删除这一行：
 
 ```
-{% with total_likes=image.users_like.count %}
+{% with total_likes=image.user_like.count %}
 ```
 替换为：
 
 ```
-{% with total_likes=image.users_like.count users_like=image.users_like.all %}
+{% with total_likes=image.user_like.count users_like=image.user_like.all %}
 ```
 用`image-info`类属性修改`<div`元素：
 
