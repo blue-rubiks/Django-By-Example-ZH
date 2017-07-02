@@ -84,14 +84,14 @@ class Image(models.Model):
 在 Image 模型中添加以下字段：
 
 ```python
-user_like = models.ManyToManyField(settings.AUTH_USER_MODEL,
+users_like = models.ManyToManyField(settings.AUTH_USER_MODEL,
                                    related_name='images_liked',
                                    blank=True)
 ```
 
 
 当你定义一个`ManyToMany`字段时，Django 会用两张表主键（primary key）创建一个中介联接表（译者注：就是新建一张普通的表，只是这张表的内容是由多对多关系双方的主键构成的）。`ManyToMany`字段可以在任意两个相关联的表中创建。
-同`ForeignKey`字段一样，`ManyToMany`字段的`related_name`属性使我们可以命名另模型回溯（或者是反查）到本模型对象的关系。`ManyToMany`字段提供了一个多对多管理器（manager），这个管理器使我们可以回溯相关联的对象比如：`image.users_like.all()`或者从一个`user`中回溯，比如：`user.images_liked.all()`。
+同`ForeignKey`字段一样，`ManyToMany`字段的`related_name`属性使我们可以命名另模型回溯（或者是反查）到本模型对象的关系。`ManyToMany`字段提供了一个多对多管理器（manager），这个管理器使我们可以回溯相关联的对象比如：`image.user_like.all()`或者从一个`user`中回溯，比如：`user.images_liked.all()`。
 打开命令行，执行下面的命令以创建首次迁移：
 
 ```
@@ -540,7 +540,7 @@ class Image(models.Model):
 {% block content %}
     <h1>{{ image.title }}</h1>
     <img src="{{ image.image.url }}" class="image-detail">
-    {% with total_likes=image.user_like.count %}
+    {% with total_likes=image.users_like.count %}
         <div class="image-info">
                 <div>
                     <span class="count">
@@ -642,9 +642,9 @@ def image_like(request):
         try:
             image = Image.objects.get(id=image_id)
             if action == 'like':
-                image.user_like.add(request.user)
+                image.users_like.add(request.user)
             else:
-                image.user_like.remove(request.user)
+                image.users_like.remove(request.user)
             return JsonResponse({'status':'ok'})
         except:
             pass
@@ -739,7 +739,7 @@ CSRF token将会在所有的不安全 HTTP 方法的 AJAX 请求中引入，比�
 替换为：
 
 ```
-{% with total_likes=image.user_like.count users_like=image.user_like.all %}
+{% with total_likes=image.users_like.count users_like=image.users_like.all %}
 ```
 用`image-info`类属性修改`<div`元素：
 
