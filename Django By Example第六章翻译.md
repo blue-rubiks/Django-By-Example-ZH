@@ -933,7 +933,9 @@ OK
 > r = redis.StrictRedis(host='localhost', port=6379, db=0)
 
 
-上面的代码创建了一个与Redis数据库的连接。在Redis中，数据库通过一个整形索引替代数据库名字来辨识。默认的，一个客户端被连接到数据库 0 。Reids数据库可用的数字设置到16，但是你可以在*redis.conf*文件中修改这个值。
+上面的代码创建了一个与Redis数据库的连接。在Redis中，数据库通过一个整形索引替代数据库名字来辨识。
+
+默认的，一个客户端被连接到数据库 0 。Reids数据库可用的数字设置到16，但是你可以在*redis.conf*文件中修改这个值。
 
 现在使用Python shell设置一个键：
 
@@ -978,7 +980,7 @@ r = redis.StrictRedis(host=settings.REDIS_HOST,
 
 在这儿我们建立了Redis的连接为了能在我们的视图（views)中使用它。编辑*images_detail*视图（view）使它看上去如下所示：
 
-# increment name by 1
+increment name by 1
 
 ```python
 r.incr('name') 
@@ -996,7 +998,9 @@ def image_detail(request, id, slug):
                'total_views': total_views})
 ```
 
-在这个视图（view）中，我们使用*INCR*命令，它会从1开始增量一个键的值，在执行这个操作之前如果键不存在，它会将值设定为0.`incr()`方法在执行操作后会返回键的值，然后我们可以存储该值到*total_views*变量中。
+在这个视图（view）中，我们使用 *INCR* 命令，它会从 *1* 开始增量一个键的值，在执行这个操作之前如果键不存在，它会将值设定为 *0*
+
+`incr()`方法在执行操作后会返回键的值，然后我们可以存储该值到*total_views*变量中。
 
 我们构建Rddis键使用一个符号，比如 `object-type:id:field (for example image:33:id)`。
 
