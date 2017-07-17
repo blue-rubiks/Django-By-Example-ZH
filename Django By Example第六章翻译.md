@@ -838,9 +838,11 @@ Redis是一个高级的*key-value*（键值）数据库允许你保存不同类�
 
 SQL最适合用于模式定义的持续数据存储，而Redis提供了许多优势当需要处理快速变化的数据，易失性存储，或者需要一个快速缓存的时候。让我们看下Redis是如何被使用的，当构建新的功能到我们的项目中。
 
-###安装Redis
+### 安装Redis
 
 从 http://redis.io/download 下载最新的Redis版本。解压*tar.gz*文件，进入*redis*目录然后编译Redis通过使用以下make命令：
+
+可參考 https://redis.io/topics/quickstart
 
 ```shell
 cd redis-3.0.4(译者注：版本根据自己下载的修改)
@@ -851,7 +853,8 @@ make （译者注：这里是假设你使用的是linux或者mac系统才有make
 
     src/redis-server
     
-你会看到输出的结尾如下所示：
+> redis-server
+
 
 ```shell
 # Server started, Redis version 3.0.4
@@ -863,6 +866,8 @@ make （译者注：这里是假设你使用的是linux或者mac系统才有make
 
     src/redis-cli
     
+> redis-cli ping    
+
 你会看到Redis客户端shell如下所示：
 
     127.0.0.1:6379>
@@ -913,36 +918,36 @@ OK
 
 以上只是一些键选项的基本命令。Redis包含了庞大的命令设置给一些数据类型，例如strings，hashes，sets，ordered sets等等。你可以通过访问 http://redis.io/commands 看到所有Reids命令以及通过访问 http://redis.io/topics/data-types 看到所有Redis支持的数据类型。
 
-###通过Python使用Redis
+### 通过Python使用Redis
 
 我们需要绑定Python和Redis。通过pip渠道安装*redis-py*命令如下：
 
-    pip install redis==2.10.3（译者注：版本可能有更新，如果需要最新版本，可以不带上'==2.10.3'后缀）
+    pip install redis
     
 你可以访问 http://redis-py.readthedocs.org/ 得到redis-py文档。
 
 *redis-py*提供两个类用来与Redis交互：*StrictRedis*和*Redis*。两者提供了相同的功能。*StrictRedis*类尝试遵守官方的Redis命令语法。*Redis*类型继承*Strictredis*重写了部分方法来提供向后的兼容性。我们将会使用*StrictRedis*类，因为它遵守Redis命令语法。打开Python shell执行以下命令：
 
-```
->>> import redis
->>> r = redis.StrictRedis(host='localhost', port=6379, db=0)
-```
+
+> import redis
+> r = redis.StrictRedis(host='localhost', port=6379, db=0)
+
 
 上面的代码创建了一个与Redis数据库的连接。在Redis中，数据库通过一个整形索引替代数据库名字来辨识。默认的，一个客户端被连接到数据库 0 。Reids数据库可用的数字设置到16，但是你可以在*redis.conf*文件中修改这个值。
 
 现在使用Python shell设置一个键：
 
-```
->>> r.set('foo', 'bar')
-True
-```
+
+> r.set('foo', 'bar')
+> True
+
 
 以上命令返回Ture表明这个键已经创建成功。现在你可以使用`get()`命令取回该键：
 
-```
->>> r.get('foo')
-'bar'
-```
+
+> r.get('foo')
+> 'bar'
+
 
 如你所见，*StrictRedis*方法遵守Redis命令语法。
 
