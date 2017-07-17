@@ -978,19 +978,27 @@ r = redis.StrictRedis(host=settings.REDIS_HOST,
 
 在这儿我们建立了Redis的连接为了能在我们的视图（views)中使用它。编辑*images_detail*视图（view）使它看上去如下所示：
 
+# increment name by 1
+
+```python
+r.incr('name') 
+```
+
 ```python
 def image_detail(request, id, slug):
-image = get_object_or_404(Image, id=id, slug=slug)
-# increment total image views by 1
-total_views = r.incr('image:{}:views'.format(image.id)) 
-return render(request,
+   image = get_object_or_404(Image, id=id, slug=slug)
+   # increment total image views by 1
+   total_views = r.incr('image:{}:views'.format(image.id)) 
+   return render(request,
               'images/image/detail.html',
               {'section': 'images',
                'image': image,
                'total_views': total_views})
 ```
 
-在这个视图（view）中，我们使用*INCR*命令，它会从1开始增量一个键的值，在执行这个操作之前如果键不存在，它会将值设定为0.`incr()`方法在执行操作后会返回键的值，然后我们可以存储该值到*total_views*变量中。我们构建Rddis键使用一个符号，比如 *object-type:id:field (for example image:33:id)* 。
+在这个视图（view）中，我们使用*INCR*命令，它会从1开始增量一个键的值，在执行这个操作之前如果键不存在，它会将值设定为0.`incr()`方法在执行操作后会返回键的值，然后我们可以存储该值到*total_views*变量中。
+
+我们构建Rddis键使用一个符号，比如 `object-type:id:field (for example image:33:id)`。
 
 > 对Redis的键进行命名有一个惯例是使用冒号进行分割来创建键的命名空间。做到这点，键的名字会特别冗长，有关联的键会分享部分相同的模式在它们的名字中。
 
