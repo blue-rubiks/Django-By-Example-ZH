@@ -289,17 +289,17 @@ templates/
 
 打开shell并且启动开发服务器使用命令`python manage.py runserver`。打开 http://127.0.0.1:8000 在你的浏览器中，添加一些产品到购物车中，并且填写结账表单。当你点击**Place order**按钮，这个订单会被保存在数据库中，这个订单ID会被保存在当前的会话中，并且你会被重定向到支付处理页面。这个页面从会话中获取订单并且渲染PayPal表单显示一个**Buy now**按钮，如下所示：
 
-![django-8-3](http://ohqrvqrlb.bkt.clouddn.com/django-8-3.png)
+![](http://ohqrvqrlb.bkt.clouddn.com/django-8-3.png)
 
 你可以看下HTML源码来看下生成的表单字段。
 
 点击**Buy now**按钮。你会被重定向到PayPal，并且你会看到如下页面：
 
-![django-8-4](http://ohqrvqrlb.bkt.clouddn.com/django-8-4.png)
+![](http://ohqrvqrlb.bkt.clouddn.com/django-8-4.png)
 
 输入购买者测试账户e-mail和密码然后点击**Log In**按钮。你会被重定向到以下页面：
 
-![django-8-5](http://ohqrvqrlb.bkt.clouddn.com/django-8-5.png)
+![](http://ohqrvqrlb.bkt.clouddn.com/django-8-5.png)
 
 现在，点击**Pay now**按钮。最后，你会看到批准页面该页面包含你的交易ID。这个页面看上去如下所示：
 
