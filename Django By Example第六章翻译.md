@@ -37,18 +37,20 @@
 
 ```python
 from django.contrib.auth.models import User
-   class Contact(models.Model):
-       user_from = models.ForeignKey(User,
-                                     related_name='rel_from_set')
-       user_to = models.ForeignKey(User,
-                                   related_name='rel_to_set')
-       created = models.DateTimeField(auto_now_add=True,
-                                      db_index=True)
-       class Meta:
-           ordering = ('-created',)
-       def __str__(self):
-           return '{} follows {}'.format(self.user_from,
-self.user_to)
+
+class Contact(models.Model):
+    user_from = models.ForeignKey(User,
+                                  related_name='rel_from_set')
+    user_to = models.ForeignKey(User,
+                                related_name='rel_to_set')
+    created = models.DateTimeField(auto_now_add=True,
+                                   db_index=True)
+
+    class Meta:
+        ordering = ('-created',)
+
+    def __str__(self):
+        return '{} follows {}'.format(self.user_from, self.user_to)
 ```
 
 这个*Contact*模型我们将会给用户关系使用。它包含以下字段：
@@ -110,7 +112,7 @@ User.add_to_class('following',
     
 你会看到如下输出：
 
-```python
+```cmd
 Migrations for 'account':
      0002_contact.py:
        - Create model Contact
@@ -265,7 +267,7 @@ Django会为所有出现在*ABSOLUTE_URL_OVERRIDES*设置中的模型（models�
         {% endif %}
     </a>
     <div id="image-list" class="imget-container">
-        {% include "images/image/list_ajax.html" with images = user.images_create.all %}
+        {% include "images/image/list_ajax.html" with images=user.images_created.all %}
     </div>
     {% endwith %}
 {% endblock %}
