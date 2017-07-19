@@ -108,7 +108,7 @@ admin.site.register(Coupon, CouponAdmin)
 
 `Coupon` 模型（model）现在已经注册进了管理站点中。确保你已经用命令 `python manage.py runserver` 打开了开发服务器。访问 http://127.0.0.1:8000/admin/coupons/add 。你可以看见下面的表单：
 
-![django-9-1](http://ohqrvqrlb.bkt.clouddn.com/django-9-1.png)
+![http://ohqrvqrlb.bkt.clouddn.com/django-9-1.png]
 
 填写表单创建一个在当前日期有效的新优惠券，确保你点击了 **Active** 复选框，然后点击 **Save**按钮。
 
