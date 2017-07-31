@@ -152,7 +152,7 @@ Migrations for 'shop':
 用下面的命令来同步你的数据库：
 
 ```shell
-python mange.py migrate
+python manage.py migrate
 ```
 
 你将会看到包含下面这一行的输出：
@@ -240,16 +240,19 @@ def product_detail(request, id, slug):
 
 ```python
 from django.conf.urls import url
+
 from . import views
 
 urlpatterns = [
     url(r'^$', views.product_list, name='product_list'),
-    url(r'^(?P<category_slug>[-\w]+)/$', 
-        views.product_list, 
+    url(r'^(?P<category_slug>[-\w]+)/$',
+        views.product_list,
         name='product_list_by_category'),
-    url(r'^(?P<id>\d+)/(?P<slug>[-\w]+)/$', 
-        views.product_detail, 
-        name='product_detail'),
+    url(r'^(?P<id>\d+)/(?P<slug>[-\w]+)/$',
+        views.product_detail,
+        name='product_detail')
+    ]
+
 ```
 
 这些是我们产品目录的URL模式。 我们为 `product_list` 视图（view）定义了两个不同的 URL 模式。 命名为`product_list` 的模式不带参数调用 `product_list` 视图（view）；命名为 `product_list_bu_category` 的模式向视图（view）函数传递一个 `category_slug` 参数，以便通过给定的产品种类来筛选产品。我们为 `product_detail` 视图（view）添加的模式传递了 `id` 和 `slug` 参数来检索特定的产品。
