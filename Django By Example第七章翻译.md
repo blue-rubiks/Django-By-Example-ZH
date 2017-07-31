@@ -67,22 +67,26 @@ INSTALLED_APPS = [
 ```python
 from django.db import models
 
+
 class Category(models.Model):
-	 name = models.CharField(max_length=200,
-							      db_index=True)
-	 slug = models.SlugField(max_length=200,
-	                        db_index=True,
-							       unique=True)
-	 class Meta:
-		  ordering = ('name',)
-		  verbose_name = 'category'
-		  verbose_name_plural = 'categories'
- 
-    def __str__(self):
-        return self.name
-        
+    name = models.CharField(max_length=200,
+                            db_index=True)
+    slug = models.SlugField(max_length=200,
+                            db_index=True,
+                            unique=True)
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name = 'category'
+        verbose_name_plural = 'categories'
+
+
+def __str__(self):
+    return self.name
+
+
 class Product(models.Model):
-    category = models.ForeignKey(Category, 
+    category = models.ForeignKey(Category,
                                  related_name='products')
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, db_index=True)
@@ -101,6 +105,7 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
 ```
 
 这是我们的 `Category` 和 `Product` 模型（models）。`Category` 模型（models）由一个 `name` 字段和一个唯一的 `slug` 字段构成。`Product` 模型（model）：
@@ -125,7 +130,7 @@ class Product(models.Model):
 由于我们会在模型（models）中和图片打交道，打开 shell ，用下面的命令安装 Pillow ：
 
 ```shell
-pip isntall Pillow==2.9.0
+pip install Pillow
 ```
 
 现在，运行下面的命令来为你的项目创建初始迁移：
