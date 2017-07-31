@@ -681,14 +681,54 @@ actions = actions.filter(user_id__in=following_ids)\
 
 ```
 actions/
-    action/
-        detail.html
+    templates/
+        actions/
+            action/
+                detail.html
 ```
 
-编辑*actions/action/detail.html*模板（template）文件添加如下代码：
+编辑 */social_website_book/actions/templates/actions/action/detail.html* 模板（template）文件添加如下代码：
 
 ```html
-明天添加
+{% load thumbnail %}
+
+{% with user=action.user profile=action.user.profile %}
+<div class="action">
+	<div class="images">
+		{% if profile.photo %}
+            {% thumbnail user.profile.photo "80x80" crop="100%" as im %}
+                <a href="{{ user.get_absolute_url }}">
+					<img src="{{ im.url }}" alt="{{ user.get_full_name }}" class="item-img">
+				</a>
+            {% endthumbnail %}
+		{% endif %}
+
+		{% if action.target %}
+			{% with target=action.target %}
+                {% if target.image %}
+                    {% thumbnail target.image "80x80" crop="100%" as im %}
+                        <a href="{{ target.get_absolute_url }}">
+							<img src="{{ im.url }}" class="item-img">
+						</a>
+                    {% endthumbnail %}
+                {% endif %}
+			{% endwith %}
+		{% endif %}
+
+	</div>
+	<div class="info">
+		<p><span class="date">{{ action.created|timesince }} ago</span><br />
+		<a href="{{ user.get_absolute_url }}">{{ user.first_name }}</a>
+		{{ action.verb }}
+		{% if action.target %}
+		    {% with target=action.target %}
+				<a href="{{ target.get_absolute_url }}">{{ target }}</a>
+			{% endwith %}
+		{% endif %}
+		</p>
+	</div>
+</div>
+{% endwith %}
 ```
 
 这个模板用来显示一个*Action*对象。首先，我们使用`{% with %}`模板标签（template tag）来获取用户操作的动作（action）和他们的profile。然后，我们显示目标对象的图片如果*Action*对象有一个关联的目标对象。最后，如果有执行过的动作（action），包括动作和目标对象，我们就显示链接给用户。
