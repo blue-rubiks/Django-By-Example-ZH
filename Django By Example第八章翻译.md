@@ -25,7 +25,7 @@ PayPal 提供了多种方法来集成它的网管到你的站点中。标准的�
 
 ##创建一个PayPal账户
 
-你需要有一个PayPal商业账户来集成支付网关到你的站点中。如果你还没有一个PayPal账户，去 https://www.paypal.com/signup/account 注册。确保你选择了一个*Bussiness Account*并且注册成为PayPal支付标准解决方案，如下图所示：
+你需要有一个PayPal商业账户来集成支付网关到你的站点中。如果你还没有一个PayPal账户，去 https://www.paypal.com/ 注册。确保你选择了一个*Bussiness Account*并且注册成为PayPal支付标准解决方案，如下图所示：
 
 ![django-8-0](http://ohqrvqrlb.bkt.clouddn.com/django-8-0.png)
 
@@ -33,15 +33,16 @@ PayPal 提供了多种方法来集成它的网管到你的站点中。标准的�
 
 ##安装django-paypal
 
-Django-paypal是一个第三方django应用，它可以简化集成PayPal到Django项目中。我们将要使用它来集成PayPal支付标准解决方案到我们的商店中。你可以找到django-paypal的文档，访问 http://django-paypal.readthedocs.org/。
+Django-paypal是一个第三方django应用，它可以简化集成PayPal到Django项目中。我们将要使用它来集成PayPal支付标准解决方案到我们的商店中。你可以找到django-paypal的文档，访问 https://github.com/spookylukey/django-paypal。
 
 安装django-paypal在shell中通过以下命令：
 
-    pip install django-paypal==0.2.5 
-    
-**(译者注：现在应该有最新版本，书上使用的是0.2.5版本)**
+    pip install django-paypal
+
 
 编辑你的项目中的*settings.py*文件，添加'paypal.standard.ipn'到*INSTALLED_APPS*设置中，如下所示：
+
+可參考 https://django-paypal.readthedocs.io/en/stable/standard/ipn.html
 
 ```python
 INSTALLED_APPS = (
@@ -49,7 +50,10 @@ INSTALLED_APPS = (
     'paypal.standard.ipn',
 )
 ```
-这个应用提供自django-paypal来集成PayPal支付标准通过**Instant Payment Notification(IPN)**。我们之后会操作支付通知。
+这个应用提供自django-paypal来集成PayPal支付标准通过  
+**Instant Payment Notification(IPN)**。
+
+我们之后会操作支付通知。
 
 添加以下设置到*myshop*的*settings.py*文件来配置django-paypal：
 
@@ -138,13 +142,18 @@ return redirect(reverse('payment:process'))
 
 编辑*payment*应用的*views.py*文件然后添加如下代码：
 
+可參考 paypal https://django-paypal.readthedocs.io/en/stable/standard/ipn.html
+
 ```python
 from decimal import Decimal
+
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, get_object_or_404
 from paypal.standard.forms import PayPalPaymentsForm
+
 from orders.models import Order
+
 
 def payment_process(request):
     order_id = request.session.get('order_id')
@@ -153,21 +162,22 @@ def payment_process(request):
     paypal_dict = {
         'business': settings.PAYPAL_RECEIVER_EMAIL,
         'amount': '%.2f' % order.get_total_cost().quantize(
-                                                Decimal('.01')),
+            Decimal('.01')),
         'item_name': 'Order {}'.format(order.id),
         'invoice': str(order.id),
         'currency_code': 'USD',
         'notify_url': 'http://{}{}'.format(host,
-                                        reverse('paypal-ipn')),
+                                           reverse('paypal-ipn')),
         'return_url': 'http://{}{}'.format(host,
-                                        reverse('payment:done')),
+                                           reverse('payment:done')),
         'cancel_return': 'http://{}{}'.format(host,
-                                    reverse('payment:canceled')),
-       }
-       form = PayPalPaymentsForm(initial=paypal_dict)
-       return render(request,
-                     'payment/process.html',
-                     {'order': order, 'form':form})
+                                              reverse('payment:canceled')),
+    }
+    form = PayPalPaymentsForm(initial=paypal_dict)
+    return render(request,
+                  'payment/process.html',
+                  {'order': order, 'form': form})
+
 ```
 
 在`payment_process`视图（view）中，我们生成了一个PayPal的**Buy now**按钮用来支付一个订单。首先，我们拿到当前的订单从`order_id`会话键中，这个键值被之前的`order_create`视图（view）设置。我们拿到这个`order`对象通过给予的ID并且构建一个新的`PayPalPaymentsForm`，该表单表单包含以下字段：
@@ -176,6 +186,12 @@ def payment_process(request):
 * amount：向顾客索要的总价。
 * item_name：正在出售的商品名。我们使用订单ID，因为订单可能包含很多产品。
 * currency_code：本次支付的货币。我们设置这里为USD使用U.S. Dollar**(译者注：传说中的美金)**。需要使用相同的货币，该货币被设置在你的PayPal账户中（例如：EUR 对应欧元）。
+可參考 https://developer.paypal.com/docs/classic/api/currency_codes/
+
+
+Note: Decimal amounts are not supported for this currency. Passing a decimal amount will throw an error.
+
+
 * notify_url：这个URL PayPal将会发送IPN请求过去。我们使用django-paypal提供的`paypal-ipn` URL。这个视图（view）与这个URL关联来操作支付通知以及存储它们到数据库中。
 * return_url：这个URL用来重定向用户当他的支付成功之后。我们使用URL `payment:done`，这个我们接下来会创建。
 * cancel_return：这个URL用来重定向用户如果这个支付被取消或者有其他问题。我们使用URL `payment:canceled`，这个我们接下来会创建。
