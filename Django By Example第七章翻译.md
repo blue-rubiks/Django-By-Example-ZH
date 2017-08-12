@@ -81,8 +81,11 @@ class Category(models.Model):
         verbose_name_plural = 'categories'
 
 
-def __str__(self):
-    return self.name
+    def __str__(self):
+        return self.name
+
+
+
 
 
 class Product(models.Model):
