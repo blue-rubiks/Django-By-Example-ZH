@@ -1295,7 +1295,7 @@ Celery 是一个分发队列，它可以处理大量的信息。它既可以执�
 让我们安装 Celery 然后把它整合进你的项目中。用下面的命令安装 Celery：
 
 ```shell
-pip install celery==3.1.18
+pip install celery
 ```
 
 Celery 需要一个消息代理（message broker）来管理请求。这个代理负责向 Celery 的 worker 发送消息，当接收到消息时 worker 就会执行任务。让我们安装一个消息代理。
@@ -1309,15 +1309,32 @@ Celery 需要一个消息代理（message broker）来管理请求。这个代�
 ```shell
 apt-get install rabbitmg
 ```
+
 **（译者@夜夜月注：这是debian系linux的安装方式）**
+
+
+mac
+
+https://www.rabbitmq.com/install-standalone-mac.html
+
+brew install rabbitmq
+
+
 
 如果你需要在 Mac OSX 或者 Windows 上安装 RabbitMQ，你可以在这个网站找到独立的支持版本：
 https://www.rabbitmq.com/download.html
 
 在安装它之后，使用下面的命令执行 RabbitMQ：
 
+進入 /usr/local/sbin
+
 ```shell
-rabbitmg-server
+./rabbitmq-server
+```
+
+
+```shell
+rabbitmq-server
 ```
 
 你将会在最后一行看到这样的输出：
